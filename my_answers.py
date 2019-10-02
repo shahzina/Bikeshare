@@ -64,16 +64,13 @@ class NeuralNetwork(object):
         #### Implement the forward pass here ####
         ### Forward pass ###
         # TODO: Hidden layer - Replace these values with your calculations.
-        #hidden_inputs = self.weights_input_to_hidden * X.reshape(-1,1) # signals into hidden layer #MATRIX MULTIPLICATION WITH X AND WEIGHTS
-        print(np.shape(X))
-        print(np.shape(self.weights_input_to_hidden))
+        #hidden_inputs = self.weights_input_to_hidden * X.reshape(-1,1) # signals into hidden layer 
         hidden_inputs = np.dot(X, self.weights_input_to_hidden)
-        hidden_outputs = self.activation_function(hidden_inputs) #signals from hidden layer #ACTIVATION FUNC W. HIDN INPUTS
-        print("Hidden Output-" + str(np.shape(hidden_outputs)))
+        hidden_outputs = self.activation_function(hidden_inputs) 
 
         # TODO: Output layer - Replace these values with your calculations.
-        final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output) # signals into final output layer
-        final_outputs = final_inputs # signals from final output layer
+        final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output) 
+        final_outputs = final_inputs 
         
         return final_outputs, hidden_outputs
 
@@ -92,24 +89,20 @@ class NeuralNetwork(object):
         ### Backward pass ###
 
         # TODO: Output error - Replace this value with your calculations.
-        error = y - final_outputs # Output layer error is the difference between desired target and actual output.
+        error = y - final_outputs 
         
         # TODO: Calculate the hidden layer's contribution to the error
-        #matrix mul - np.dot(self.weights_input_to_hidden,error)             
-        hidden_error = np.dot(self.weights_hidden_to_output,error)
+        hidden_error = np.dot(self.weights_hidden_to_output,error)                    
         
         # TODO: Backpropagated error terms - Replace these values with your calculations.
+       
         output_error_term = error  
+        hidden_error_term = hidden_error * hidden_outputs * (1 - hidden_outputs) 
         
-        hidden_error_term = hidden_error * hidden_outputs * (1 - hidden_outputs) #error(weight) times sigmoid(h)*(1-sigmoid(h))
-                                                                            #gradient of the error term 
-                                                                     #calculating derivative of err term with respect to weights.
         
-        # Weight step (input to hidden)
-        # .reshape(-1,1)
-        delta_weights_i_h += hidden_error_term * X.reshape(-1,1) #multiplying the new weights to inputs
-        # Weight step (hidden to output)
-        delta_weights_h_o += output_error_term * hidden_outputs[:,None]
+ 
+        delta_weights_i_h += hidden_error_term * X.reshape(-1,1) 
+        delta_weights_h_o += output_error_term * hidden_outputs.reshape(-1,1)
         
         return delta_weights_i_h, delta_weights_h_o
 
@@ -123,8 +116,8 @@ class NeuralNetwork(object):
             n_records: number of records
 
         '''
-        self.weights_hidden_to_output += (self.lr * delta_weights_h_o)/n_records # update hidden-to-output weights with gradient descent step
-        self.weights_input_to_hidden += (self.lr * delta_weights_i_h)/n_records # update input-to-hidden weights with gradient descent step
+        self.weights_hidden_to_output += (self.lr * delta_weights_h_o)/n_records 
+        self.weights_input_to_hidden += (self.lr * delta_weights_i_h)/n_records
 
     def run(self, features):
         ''' Run a forward pass through the network with input features 
@@ -136,12 +129,12 @@ class NeuralNetwork(object):
         
         #### Implement the forward pass here ####
         # TODO: Hidden layer - replace these values with the appropriate calculations.
-        hidden_inputs =   np.dot(features,self.weights_input_to_hidden) # signals into hidden layer
-        hidden_outputs = self.activation_function(hidden_inputs) # signals from hidden layer
+        hidden_inputs =   np.dot(features,self.weights_input_to_hidden) 
+        hidden_outputs = self.activation_function(hidden_inputs) 
         
         # TODO: Output layer - Replace these values with the appropriate calculations.
-        final_inputs = np.dot(self.weights_hidden_to_output, hidden_outputs) # signals into final output layer
-        final_outputs = final_inputs # signals from final output layer 
+        final_inputs = np.dot(self.weights_hidden_to_output, hidden_outputs) 
+        final_outputs = final_inputs 
         
         return final_outputs
 
