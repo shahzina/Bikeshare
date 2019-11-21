@@ -7,6 +7,7 @@ class NeuralNetwork(object):
         self.input_nodes = input_nodes
         self.hidden_nodes = hidden_nodes
         self.output_nodes = output_nodes
+        
 
         # Initialize weights
         self.weights_input_to_hidden = np.random.normal(0.0, self.input_nodes**-0.5, 
@@ -46,7 +47,7 @@ class NeuralNetwork(object):
         delta_weights_h_o = np.zeros(self.weights_hidden_to_output.shape)
         for X, y in zip(features, targets):
             
-            final_outputs, hidden_outputs = self.forward_pass_train(X)  # Implement the forward pass function below
+            final_outputs,hidden_outputs = self.forward_pass_train(X)  # Implement the forward pass function below
             # Implement the backproagation function below
             delta_weights_i_h, delta_weights_h_o = self.backpropagation(final_outputs, hidden_outputs, X, y, 
                                                                         delta_weights_i_h, delta_weights_h_o)
@@ -64,9 +65,10 @@ class NeuralNetwork(object):
         #### Implement the forward pass here ####
         ### Forward pass ###
         # TODO: Hidden layer - Replace these values with your calculations.
-        #hidden_inputs = self.weights_input_to_hidden * X.reshape(-1,1) # signals into hidden layer 
-        hidden_inputs = np.dot(X, self.weights_input_to_hidden)
+        hidden_inputs = self.weights_input_to_hidden * X.reshape(-1,1) # signals into hidden layer 
+        #hidden_inputs = np.dot(X, self.weights_input_to_hidden)
         hidden_outputs = self.activation_function(hidden_inputs) 
+        
 
         # TODO: Output layer - Replace these values with your calculations.
         final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output) 
@@ -90,19 +92,31 @@ class NeuralNetwork(object):
 
         # TODO: Output error - Replace this value with your calculations.
         error = y - final_outputs 
-        
+        output_error_term = error * self.activation_function(final_outputs)
         # TODO: Calculate the hidden layer's contribution to the error
-        hidden_error = np.dot(self.weights_hidden_to_output,error)                    
         
-        # TODO: Backpropagated error terms - Replace these values with your calculations.
+        hidden_error = output_error_term.dot(self.weights_hidden_to_output.T)
+        hidden_error_term = hidden_error * self.activation_function(hidden_error)
+        
+        #### ARE WE PASSING IT THRU THE ACT FUNC OR THE DERIVATIVE OF IT?
+        '''
+        #TODO: Backpropagated error terms - Replace these values with your calculations.
        
         output_error_term = error  
         hidden_error_term = hidden_error * hidden_outputs * (1 - hidden_outputs) 
         
+#         print("output err term" , output_error_term.shape)
+#         print("hid err term" , hidden_error_term.shape)
+#         print("output" , hidden_outputs.shape)
+#         print("input" , X.shape)
+#         print("final op" , final_outputs.shape)
+        '''
         
- 
-        delta_weights_i_h += hidden_error_term * X.reshape(-1,1) 
-        delta_weights_h_o += output_error_term * hidden_outputs.reshape(-1,1)
+        #delta_weights_h_o += output_error_term * hidden_outputs #.reshape(-1,1)
+        delta_weights_h_o += hidden_outputs.T.dot(output_error_term)
+        #delta_weights_i_h += hidden_error_term * X.reshape(-1,1) 
+        delta_weights_i_h += X.T.dot(hidden_error_term)
+        
         
         return delta_weights_i_h, delta_weights_h_o
 
