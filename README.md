@@ -20,7 +20,9 @@ The training and validation loss was as follows:
 ![train_valid_loss](https://github.com/shahzina/Bikeshare/blob/master/images/train_valid_loss.png)
 
 ### What does this mean? <br>
+Accuracy in neural networks is measured as a percentage but loss is the summation of errors made for each example in training or validation sets. We are using the mean squared error to calculate the loss for our network and we define a function for this in our jupyter notebook. Loss tells how well or bad the model behaves after each iteration of optimization. While training our model, the goal is to reduce the loss as much as possible. <br>
 
+Our validation loss is higher than our training loss, as stated above, which is indicative of over-generalization or overfitting. It occurs when the model learns from the training set in a way that it expects the test set to be the same or similar and becomes ineffective for it. Regularization is done to correct or prevent overfitting and in our model we regularize by dividing the product of learning rate and delta weights by the total number of records. <br>
 
 ## Predictions by the model - <br>
 ![predictions](https://github.com/shahzina/Bikeshare/blob/master/images/predictions.png)
