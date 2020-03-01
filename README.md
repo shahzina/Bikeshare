@@ -26,5 +26,5 @@ Our validation loss is higher than our training loss, as stated above, which is 
 
 ## Hurdles in achieving desired loss- <br>
 1- Matrix math is very important here. If the math is not correct the dimensions won't match and there will be errors, also the unit tests will fail.<br>
-2- We won't be able to code the matrix math properly if we don't understand how forward and backward pass work. The key to coding it properly is knowing what you're doing. 
+2- We won't be able to code the matrix math properly if we don't understand how forward and backward pass work. The key to coding it properly is knowing what you're doing. <br>
 3- It is also important to learn more about the hyperparameters, how they work together and what effect they have. This will help learn how to tune and how much to tune by. <br> 
