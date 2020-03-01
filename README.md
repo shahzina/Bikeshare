@@ -1,10 +1,7 @@
-# Predicting Bikeshare
+# Predicting Bikeshare 
 
-Predict the bikeshare usage for December given the data for last 60 days. 
-
-The graph below shows the rider data for the first 10 days of December. 
-
-![number of bikers](https://github.com/shahzina/Bikeshare/blob/master/images/num_bike_riders.png)
+### Task -<br> 
+Predict daily bike rental ridership for the last 10 days of December given the data for last 60 days. 
 
 ## Building our neural network in Python:
 
@@ -26,3 +23,7 @@ Our validation loss is higher than our training loss, as stated above, which is 
 
 ## Predictions by the model - <br>
 ![predictions](https://github.com/shahzina/Bikeshare/blob/master/images/predictions.png)
+
+## Hurdles in achieving desired loss- <br>
+1- Matrix math is very important here. If the math is not correct the dimensions won't match and there will be errors, also the unit tests will fail.<br>
+2- It is also important to learn more about the hyperparameters, how they work together and what effect they have. This will help learn how to tune and how much to tune by. <br> 
